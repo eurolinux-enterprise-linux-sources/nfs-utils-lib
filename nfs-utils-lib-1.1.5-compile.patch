@@ -1,0 +1,12 @@
+diff -up nfs-utils-lib-1.1.5/libnfsidmap/configure.in.orig nfs-utils-lib-1.1.5/libnfsidmap/configure.in
+--- nfs-utils-lib-1.1.5/libnfsidmap/configure.in.orig	2011-01-14 11:49:22.000000000 -0500
++++ nfs-utils-lib-1.1.5/libnfsidmap/configure.in	2011-01-14 11:49:38.000000000 -0500
+@@ -1,7 +1,7 @@
+ #                                               -*- Autoconf -*-
+ # Process this file with autoconf to produce a configure script.
+ 
+-AC_PREREQ([2.66])
++AC_PREREQ([2.63])
+ AC_INIT([libnfsidmap],[0.24],[linux-nfs@vger.kernel.org])
+ AC_CONFIG_SRCDIR([nfsidmap.h])
+ AC_CONFIG_MACRO_DIR([m4])

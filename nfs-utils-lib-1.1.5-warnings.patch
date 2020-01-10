@@ -1,0 +1,22 @@
+diff -up nfs-utils-lib-1.1.5/librpcsecgss/src/clnt_raw.c.orig nfs-utils-lib-1.1.5/librpcsecgss/src/clnt_raw.c
+--- nfs-utils-lib-1.1.5/librpcsecgss/src/clnt_raw.c.orig	2011-01-14 12:43:09.000000000 -0500
++++ nfs-utils-lib-1.1.5/librpcsecgss/src/clnt_raw.c	2011-01-14 12:46:59.000000000 -0500
+@@ -135,7 +135,7 @@ clntraw_call(h, proc, xargs, argsp, xres
+ {
+ 	register struct clntraw_private *clp = clntraw_private;
+ 	register XDR *xdrs = &clp->xdr_stream;
+-	struct rpc_msg msg;
++	struct rpc_msg msg, *pmsg;
+ 	enum clnt_stat status;
+ 	struct rpc_err error;
+ 
+@@ -147,7 +147,8 @@ call_again:
+ 	 */
+ 	xdrs->x_op = XDR_ENCODE;
+ 	XDR_SETPOS(xdrs, 0);
+-	((struct rpc_msg *)clp->mashl_callmsg)->rm_xid ++ ;
++	pmsg = (struct rpc_msg *)clp->mashl_callmsg;
++	pmsg->rm_xid++;
+ 	if ((! XDR_PUTBYTES(xdrs, clp->mashl_callmsg, clp->mcnt)) ||
+ 	    (! XDR_PUTLONG(xdrs, (long *)&proc)) ||
+ 	    (! AUTH_MARSHALL(h->cl_auth, xdrs)) ||

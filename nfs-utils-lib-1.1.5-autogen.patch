@@ -1,0 +1,13 @@
+diff -up nfs-utils-lib-1.1.5/libnfsidmap/autogen.sh.orig nfs-utils-lib-1.1.5/libnfsidmap/autogen.sh
+--- nfs-utils-lib-1.1.5/libnfsidmap/autogen.sh.orig	2010-12-08 12:07:53.000000000 -0500
++++ nfs-utils-lib-1.1.5/libnfsidmap/autogen.sh	2012-10-10 12:21:42.512536000 -0400
+@@ -37,5 +37,7 @@ fi
+ 
+ aclocal
+ libtoolize --force --copy
+-autoupdate
+-autoreconf -vi -Wall
++autoheader
++automake --add-missing --copy --gnu # -Wall
++autoconf # -Wall
++

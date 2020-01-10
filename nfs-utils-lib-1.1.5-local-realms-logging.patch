@@ -1,0 +1,14 @@
+diff -up nfs-utils-lib-1.1.5/libnfsidmap/libnfsidmap.c.orig nfs-utils-lib-1.1.5/libnfsidmap/libnfsidmap.c
+--- nfs-utils-lib-1.1.5/libnfsidmap/libnfsidmap.c.orig	2012-10-11 15:19:38.192579000 -0400
++++ nfs-utils-lib-1.1.5/libnfsidmap/libnfsidmap.c	2012-10-11 15:20:21.147850000 -0400
+@@ -285,8 +285,9 @@ int nfs4_init_name_mapping(char *conffil
+ 			}
+ 			buf = malloc(siz);
+ 			if (buf) {
++				*buf = 0;
+ 				TAILQ_FOREACH(r, &local_realms->fields, link) {
+-					sprintf(buf, "'%s' ", r->field);
++					sprintf(buf+strlen(buf), "'%s' ", r->field);
+ 				}
+ 				IDMAP_LOG(1, ("libnfsidmap: Realms list: %s", buf));
+ 				free(buf);
