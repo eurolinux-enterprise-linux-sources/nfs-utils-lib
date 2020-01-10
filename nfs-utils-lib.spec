@@ -1,7 +1,7 @@
 Summary: Network File System Support Library
 Name: nfs-utils-lib
 Version: 1.1.5
-Release: 9%{?dist}
+Release: 11%{?dist}
 URL: http://www.citi.umich.edu/projects/nfsv4/linux/
 License: BSD
 
@@ -23,9 +23,8 @@ Patch02: nfs-utils-lib-1.1.5-ldapsupport.patch
 Patch03: nfs-utils-lib-1.1.5-local-realms-logging.patch
 Patch04: nfs-utils-lib-1.1.5-zeroids.patch
 Patch05: nfs-utils-lib-1.1.5-nss.patch
-#
-# RHEL-6.6-Z
-Patch06: nfs-utils-lib-1.1.5-caseless-domain.patch
+Patch06: nfs-utils-lib-1.1.5-nobody.patch
+Patch07: nfs-utils-lib-1.1.5-caseless-domain.patch
 
 Patch100: nfs-utils-lib-rhel-idmapd.conf-default.patch
 Patch101: nfs-utils-lib-1.1.5-warnings.patch
@@ -81,8 +80,14 @@ mv %{librpcsecgss}-%{rpcsecgssvers} %{librpcsecgss}
 %patch04 -p1
 # 1066153 - RFE: Make rpcidmap and NFS accept full qualified usernames as a user
 %patch05 -p1
-# 1223764 - nss_getpwnam: does not ignore case when comparing domain names
+
+#
+# RHEL6.7
+#
+# 1129792 - libnfsidmap: respect Nobody-User/Nobody-Group 
 %patch06 -p1
+# 1223465 - nss_getpwnam: does not ignore case when comparing domain names 
+%patch07 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -177,8 +182,11 @@ rm -rf %{buildroot}
 %{_libdir}/librpcsecgss.la
 
 %changelog
-* Mon Jun 15 2014 Steve Dickson <steved@redhat.com>  1.1.5-9_6
-- Make domain comparing case-less (bz 1223764)
+* Wed May 20 2015 Steve Dickson <steved@redhat.com>  1.1.5-11
+- Make domain comparing case-less (bz 1223465)
+
+* Thu Feb 12 2015 Steve Dickson <steved@redhat.com>  1.1.5-10
+- Respect the setting of the local Nobody-User/Nobody-Group (bz 1129792)
 
 * Thu May 22 2014 Steve Dickson <steved@redhat.com>  1.1.5-9
 - Rebuild: nfs-utils-lib-1.1.5-nss.patch was corrupted (bz 1066153)
