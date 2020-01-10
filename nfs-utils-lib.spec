@@ -1,7 +1,7 @@
 Summary: Network File System Support Library
 Name: nfs-utils-lib
 Version: 1.1.5
-Release: 6%{?dist}
+Release: 9%{?dist}
 URL: http://www.citi.umich.edu/projects/nfsv4/linux/
 License: BSD
 
@@ -22,6 +22,7 @@ Patch01: nfs-utils-lib-1.1.5-libnfsidmap-0-25-rc1.patch
 Patch02: nfs-utils-lib-1.1.5-ldapsupport.patch
 Patch03: nfs-utils-lib-1.1.5-local-realms-logging.patch
 Patch04: nfs-utils-lib-1.1.5-zeroids.patch
+Patch05: nfs-utils-lib-1.1.5-nss.patch
 
 Patch100: nfs-utils-lib-rhel-idmapd.conf-default.patch
 Patch101: nfs-utils-lib-1.1.5-warnings.patch
@@ -71,10 +72,12 @@ mv %{librpcsecgss}-%{rpcsecgssvers} %{librpcsecgss}
 %patch03 -p1
 
 #
-# RHEL6.5-z
+# RHEL6.6
 #
-# 1106351 - chown does not respect NFSv4 no_root_squash 
+# 1043558 - chown does not respect NFSv4 no_root_squash
 %patch04 -p1
+# 1066153 - RFE: Make rpcidmap and NFS accept full qualified usernames as a user
+%patch05 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -169,8 +172,14 @@ rm -rf %{buildroot}
 %{_libdir}/librpcsecgss.la
 
 %changelog
-* Wed Jul  9 2014 Steve Dickson <steved@redhat.com>  1.1.5-6_5
-- id_as_chars() fails zero value ids. (bz 1106351)
+* Thu May 22 2014 Steve Dickson <steved@redhat.com>  1.1.5-9
+- Rebuild: nfs-utils-lib-1.1.5-nss.patch was corrupted (bz 1066153)
+
+* Thu May 22 2014 Steve Dickson <steved@redhat.com>  1.1.5-8
+- nss: strrchr() instead of strchr() to get the last occurrence of "@" (bz 1066153)
+
+* Thu May  1 2014 Steve Dickson <steved@redhat.com>  1.1.5-7
+- id_as_chars() fails zero value ids. (bz 1043558)
 
 * Thu Nov  1 2012 Steve Dickson <steved@redhat.com>  1.1.5-6
 - Fixed a typo in how the patches were being applied (bz 804812)
