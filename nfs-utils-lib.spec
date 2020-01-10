@@ -1,7 +1,7 @@
 Summary: Network File System Support Library
 Name: nfs-utils-lib
 Version: 1.1.5
-Release: 11%{?dist}
+Release: 13%{?dist}
 URL: http://www.citi.umich.edu/projects/nfsv4/linux/
 License: BSD
 
@@ -25,6 +25,8 @@ Patch04: nfs-utils-lib-1.1.5-zeroids.patch
 Patch05: nfs-utils-lib-1.1.5-nss.patch
 Patch06: nfs-utils-lib-1.1.5-nobody.patch
 Patch07: nfs-utils-lib-1.1.5-caseless-domain.patch
+Patch08: nfs-utils-lib-1.1.5-multidomains.patch
+Patch09: nfs-utils-lib-1.1.5-nssgssprinc.patch
 
 Patch100: nfs-utils-lib-rhel-idmapd.conf-default.patch
 Patch101: nfs-utils-lib-1.1.5-warnings.patch
@@ -87,7 +89,14 @@ mv %{librpcsecgss}-%{rpcsecgssvers} %{librpcsecgss}
 # 1129792 - libnfsidmap: respect Nobody-User/Nobody-Group 
 %patch06 -p1
 # 1223465 - nss_getpwnam: does not ignore case when comparing domain names 
+#
+# RHEL6.9
+#
 %patch07 -p1
+# 1410855 - NFSv4 id mapping issues in multi-domain environments
+%patch08 -p1
+# 1419780 - Cannot create file in it's directory using kerberos authentication
+%patch09 -p1
 
 %patch100 -p1
 %patch101 -p1
@@ -182,6 +191,12 @@ rm -rf %{buildroot}
 %{_libdir}/librpcsecgss.la
 
 %changelog
+* Wed Feb  8 2017 Steve Dickson <steved@redhat.com>  1.1.5-13
+- Fixed stripping realm problem in nss_gss_princ routines (bz 1419780)
+
+* Tue Jan 10 2017 Steve Dickson <steved@redhat.com>  1.1.5-12
+- Add options to aid id mapping in multi domain environments (bz 1410855)
+
 * Wed May 20 2015 Steve Dickson <steved@redhat.com>  1.1.5-11
 - Make domain comparing case-less (bz 1223465)
 

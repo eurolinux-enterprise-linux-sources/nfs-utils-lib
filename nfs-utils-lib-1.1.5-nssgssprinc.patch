@@ -1,0 +1,21 @@
+diff -up nfs-utils-lib-1.1.5/libnfsidmap/nss.c.orig nfs-utils-lib-1.1.5/libnfsidmap/nss.c
+--- nfs-utils-lib-1.1.5/libnfsidmap/nss.c.orig	2017-02-08 09:21:41.225237929 -0500
++++ nfs-utils-lib-1.1.5/libnfsidmap/nss.c	2017-02-08 09:22:34.482306519 -0500
+@@ -405,7 +405,7 @@ static int nss_gss_princ_to_ids(char *se
+ 		return -ENOENT;
+ 	}
+ 	/* XXX: this should call something like getgssauthnam instead? */
+-	pw = nss_getpwnam(princ, NULL, &err, 0);
++	pw = nss_getpwnam(princ, NULL, &err, 1);
+ 	if (pw == NULL) {
+ 		err = -ENOENT;
+ 		goto out;
+@@ -428,7 +428,7 @@ int nss_gss_princ_to_grouplist(char *sec
+ 		goto out;
+ 	/* XXX: not quite right?  Need to know default realm? */
+ 	/* XXX: this should call something like getgssauthnam instead? */
+-	pw = nss_getpwnam(princ, NULL, &ret, 0);
++	pw = nss_getpwnam(princ, NULL, &ret, 1);
+ 	if (pw == NULL) {
+ 		ret = -ENOENT;
+ 		goto out;
